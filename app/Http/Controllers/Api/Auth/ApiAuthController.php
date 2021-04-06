@@ -15,7 +15,6 @@ use App\Models\Role;
 
 class ApiAuthController extends Controller
 {
-
     public function login (Request $request) 
     {
         $validator = Validator::make($request->all(), [
@@ -38,9 +37,10 @@ class ApiAuthController extends Controller
                                 'id' => $user->id,
                                 'name' => $user->name,
                                 'email' => $user->email,
+                                'uuid' => $user->uuid,
                                 'access_token' => $token,
-                                'role' => $user->getRoleNames()[0],
-                                'permissions' => $user->getAllPermissions()->toArray(),
+                                'role' => 'Owner',
+                                'permissions' => [],
                             ];
                 //return response($response);
                 return response($response, 200);
@@ -81,7 +81,8 @@ class ApiAuthController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'access_token' => $token,
+            'uuid' => $user->uuid,
+            'access_token' => $token,            
             'role' => 'Owner',
             'permissions' => [],
         ];    

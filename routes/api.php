@@ -27,11 +27,15 @@ $api->version('v1', function($api){
 
             $api->group(['prefix' => 'users'], function ($api) {
                 $api->get('/', 'Api\Users\UsersController@index');
-//                $api->post('/', 'Api\Users\UsersController@store');
                 $api->get('/{id}', 'Api\Users\UsersController@show');
                 $api->put('/{id}', 'Api\Users\UsersController@update');
                 $api->patch('/{id}', 'Api\Users\UsersController@update');
                 $api->delete('/{id}', 'Api\Users\UsersController@destroy');
+            });
+
+            $api->group(['prefix' => 'customers'], function ($api) {
+                $api->get('/', 'Api\CustomerManagementController@index');
+              
             });
         
             $api->group(['prefix' => 'me'], function($api) {

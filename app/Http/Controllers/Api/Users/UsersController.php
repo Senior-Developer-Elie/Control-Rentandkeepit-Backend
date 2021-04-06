@@ -35,11 +35,6 @@ class UsersController extends Controller
     public function __construct(User $model)
     {
         $this->model = $model;
-        /*$this->middleware('permission:List users')->only('index');
-        $this->middleware('permission:List users')->only('show');
-        $this->middleware('permission:Create users')->only('store');
-        $this->middleware('permission:Update users')->only('update');
-        $this->middleware('permission:Delete users')->only('destroy');*/
     }
 
     /**
@@ -48,14 +43,10 @@ class UsersController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index()
     {
-        $paginator = $this->model->with('roles.permissions')->paginate($request->get('limit', config('app.pagination_limit', 20)));
-        if ($request->has('limit')) {
-            $paginator->appends('limit', $request->get('limit'));
-        }
-
-        return $this->response->paginator($paginator, new UserTransformer());
+        $users =  $this->model->all();
+        return response($users->toArray());
     }
 
     /**
@@ -64,8 +55,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = $this->model->with('roles.permissions')->find($id);
-        return $this->response->item($user, new UserTransformer());
+        $user = $this->model->find($id);
+        return response($user->toArray());
     }
 
     /**
