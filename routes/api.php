@@ -35,6 +35,8 @@ $api->version('v1', function($api){
 
             $api->group(['prefix' => 'customers'], function ($api) {
                 $api->get('/', 'Api\CustomerManagementController@index');
+                $api->get('/orders/{id}', 'Api\CustomerManagementController@getOrders');
+
               
             });
         

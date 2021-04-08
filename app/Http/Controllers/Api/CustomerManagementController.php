@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Order;
 
 class CustomerManagementController extends Controller
 {
@@ -40,19 +41,34 @@ class CustomerManagementController extends Controller
         return response($customer);
     }
 
+    public function getOrders($id) 
+    {
+        //$orders = Order::where('customer_id', $id)->get();
+        //return response($orders[0]->order_items);
 
+        $orders = $this->model->where('customer_id', $id)->first()->orders;
+
+        $responseArray = array();
+        foreach ($orders as $order) {
+            $data = $order;
+            $order_items = $order->order_items->toArray();
+
+            array_push($responseArray, $data);
+        }
+        return response($responseArray);
+    }
     /**
      * @param Request $request
      * @return mixed
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             'company_id' => 'required',
             'name' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
-        ]);
+        ]);*/
 
         $customer = $this->model->create($request->all());
         
@@ -69,12 +85,12 @@ class CustomerManagementController extends Controller
     {
         $customer = $this->model->find($id);
 
-        $this->validate($request, [
+       /* $this->validate($request, [
             'company_id' => 'required',
             'name' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
-        ]);
+        ]);*/
 
 
         $customer->update($request->all());
