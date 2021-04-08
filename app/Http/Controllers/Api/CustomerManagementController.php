@@ -83,20 +83,19 @@ class CustomerManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = $this->model->find($id);
+        $customer = $this->model->where('customer_id', $id)->first();
+       
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required',
+            'country' => 'required',
+            'postcode' => 'required',
+            'city'    => 'required',
+        ]);
 
-       /* $this->validate($request, [
-            'company_id' => 'required',
-            'name' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-        ]);*/
-
-
-        $customer->update($request->all());
-
-        $result = $this->model->find($customer->id)->toArray();
-        return response($result);   
+        $customer->update($request->all());        
+        return response(['state' => 'success']);   
     }
 
      /**
