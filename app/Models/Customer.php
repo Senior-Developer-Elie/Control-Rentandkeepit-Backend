@@ -22,7 +22,6 @@ class Customer extends Model
         'email',
         'data_last_active',
         'data_registered',
-        'country',
         'postcode',
         'city',
         'state',
