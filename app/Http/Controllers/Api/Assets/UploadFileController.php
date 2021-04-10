@@ -61,6 +61,19 @@ class UploadFileController extends Controller
         $this->model = $model;
     }
 
+    public function fileUploadPost(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|max:100000',
+        ]);
+        //return response($request->all());  
+        $fileName = time().'.'.$request->file->extension();  
+   
+        $request->file->move(public_path('uploads'), $fileName);
+        
+        return response(['filename' => $fileName]);
+    }
+
     /**
      * @param \Illuminate\Http\Request $request
      * @return $this

@@ -49,7 +49,7 @@ $api->version('v1', function($api){
             });
 
             $api->group(['prefix' => 'assets'], function($api) {
-                $api->post('/', 'Api\Assets\UploadFileController@store');
+                $api->post('/', 'Api\Assets\UploadFileController@fileUploadPost');            
             });
 
         });
