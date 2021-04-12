@@ -37,7 +37,9 @@ $api->version('v1', function($api){
                 $api->get('/', 'Api\CustomerManagementController@index');
                 $api->get('/orders/{id}', 'Api\CustomerManagementController@getOrders');
 
-                $api->put('/{id}', 'Api\CustomerManagementController@update');
+                $api->post('/agreement', 'Api\CustomerManagementController@saveAgreement');
+
+                $api->put('/{id}', 'Api\CustomerManagementController@update');  
                 $api->patch('/{id}', 'Api\CustomerManagementController@update');
             });
 

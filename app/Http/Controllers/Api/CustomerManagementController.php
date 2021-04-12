@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Agreement;
 
 class CustomerManagementController extends Controller
 {
@@ -111,5 +112,24 @@ class CustomerManagementController extends Controller
         return response([
             'message' => 'success',
         ]);
+    }
+
+
+    public function saveAgreement(Request $request)
+    {
+        $this->validate($request, [
+            'customer_id' => 'required',
+            'order_id' => 'required',
+            'meta_key' => 'required',
+        ]);
+
+        $agreement = Agreement::where('customer_id', $request->customer_id)->
+                                where('order_id', $request->order_id)->get()->first();
+
+        if(!empty($agreement)) {
+            $agreement->update($request->all());
+        }
+        else 
+            Agreement::create($request->all());
     }
 }
