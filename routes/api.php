@@ -40,6 +40,11 @@ $api->version('v1', function($api){
                 $api->put('/{id}', 'Api\CustomerManagementController@update');
                 $api->patch('/{id}', 'Api\CustomerManagementController@update');
             });
+
+            $api->group(['prefix' => 'products'], function ($api) {
+                $api->get('/', 'Api\ProductManagementController@index');
+        
+            });
         
             $api->group(['prefix' => 'me'], function($api) {
                 $api->get('/', 'Api\Users\ProfileController@index');

@@ -14,6 +14,6 @@ class Product extends Model
     
     public function product_meta()
     {
-        return $this->hasOne(ProductMeta::class);
+        return $this->hasOne(ProductMeta::class, 'product_id', 'ID');
     }
 }
