@@ -36,6 +36,7 @@ $api->version('v1', function($api){
             $api->group(['prefix' => 'customers'], function ($api) {
                 $api->get('/', 'Api\CustomerManagementController@index');
                 $api->get('/orders/{id}', 'Api\CustomerManagementController@getOrders');
+                $api->get('/download', 'Api\CustomerManagementController@downLoad');
 
                 $api->post('/agreement', 'Api\CustomerManagementController@saveAgreement');
 
@@ -56,7 +57,9 @@ $api->version('v1', function($api){
             });
 
             $api->group(['prefix' => 'assets'], function($api) {
-                $api->post('/', 'Api\Assets\UploadFileController@fileUploadPost');            
+                $api->post('/', 'Api\Assets\UploadFileController@fileUploadPost');
+                
+                            
             });
 
         });

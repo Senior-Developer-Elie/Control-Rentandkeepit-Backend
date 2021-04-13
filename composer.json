@@ -25,6 +25,7 @@
         "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
         "monarobase/country-list": "^3.2",
+        "phpoffice/phpword": "^0.18.1",
         "spatie/laravel-permission": "^4.0",
         "stripe/stripe-php": "^7.75"
     },
