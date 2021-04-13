@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 Route::get('/', [\App\Http\Controllers\ApiDocsController::class, 'index']);
 
@@ -16,7 +17,7 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                     "Content-type"=>"text/html",
                     "Content-Disposition"=>"attachment;Filename=Rent & Keep It Lease Schedule(" . $customerName . ").doc"
                 );
-                $image = "http://localhost:8000/heading.png";
+                $image = URL::to('heading.png'); //"http://localhost:8000/heading.png";
 
                 $content = '<html
                             xmlns:o="urn:schemas-microsoft-com:office:office"
