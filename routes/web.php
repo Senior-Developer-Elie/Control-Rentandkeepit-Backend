@@ -51,7 +51,7 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                             </head>
                                 <body>
                                     <div class="Section1" style="font-size: 13px; margin: 5px;">
-                                        <img src="http://localhost:8000/heading.png" width="720" height="130" style="margin-top: -50px;">
+                                        <img src="'. $image .'" width="720" height="130" style="margin-top: -50px;">
                                         <div style="border-color: black; border-style: solid; padding: 10px; border-width: 2px;" width="600">
                                             <p style="text-align: center;">
                                                 <span style="font-size: 20px; font-weight: bold; color: blue;">SCHEDULE <br>LEASE AGREEMENT</span><br>
