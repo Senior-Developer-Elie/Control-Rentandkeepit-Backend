@@ -19,7 +19,7 @@ class CreateAgreementsTable extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('order_id');
             $table->string('meta_key');
-
+            
             $table->timestamps();
         });
     }

@@ -84,8 +84,8 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                                                 <span style="font-weight: bold; font-size: 14px;">And</span>
                                             </div>
                                             <div>
-                                                [ '. $customerName . ' ] of [ ' . $address . ' ]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tel: [ ' . $phoneNumber . ' ]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                '. $customerName . ' of ' . $address . ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tel: ' . $phoneNumber . ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight: bold;">(“Hirer”)</span>
                                             </div>
                                             <div style="margin-bottom: 10px;">
@@ -97,7 +97,7 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight: bold;">New ' . $products . '</span><br>
                                                 To be kept at:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ ' . $address . ' ]      
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ' . $address . '       
                                             </div>
                                             <hr >
                                             
@@ -126,7 +126,7 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                                             <div style="margin-bottom: 8px;">
                                                 Your First Payment Date is&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                &nbsp;&nbsp;<span style="font-weight: bold;">[' . $firstPaymentDate . '] </span>
+                                                &nbsp;&nbsp;<span style="font-weight: bold;">' . $firstPaymentDate . ' </span>
                                             </div>
                                             <div style="margin-bottom: 8px;">
                                                 <span style="font-weight: bold;">The number of Payments under</span><br>
