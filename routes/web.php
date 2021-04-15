@@ -37,7 +37,6 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                                 p.MsoFooter, li.MsoFooter, div.MsoFooter{
                                     margin: 0cm;
                                     margin-bottom: 0001pt;
-                                    mso-pagination:widow-orphan;
                                     font-size: 12.0 pt;
                                     text-align: left;
                                 }
@@ -233,10 +232,10 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                                             </div>
                                         </div>
                                         
-                                        <br clear=all style="mso-special-character:line-break;page-break-after:always" />
+                                        <br clear=all style="mso-special-character:line-break;" />
                                         <div style="mso-element:footer" id="f1">
                                             <p class=MsoFooter>
-                                                Page <span style="mso-field-code:" PAGE "">1</span>
+                                                &nbsp;
                                             </p>
                                         </div>
                                     </div>
