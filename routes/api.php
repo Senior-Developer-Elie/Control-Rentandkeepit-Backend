@@ -38,10 +38,19 @@ $api->version('v1', function($api){
                 $api->get('/orders/{id}', 'Api\CustomerManagementController@getOrders');
                 $api->get('/download', 'Api\CustomerManagementController@downLoad');
 
-                $api->post('/agreement', 'Api\CustomerManagementController@saveAgreement');
+                $api->post('/', 'Api\CustomerManagementController@store');
 
                 $api->put('/{id}', 'Api\CustomerManagementController@update');  
                 $api->patch('/{id}', 'Api\CustomerManagementController@update');
+            });
+
+            $api->group(['prefix' => 'orders'], function ($api) {
+                $api->get('/', 'Api\OrderManagementController@index');
+                $api->post('/', 'Api\OrderManagementController@store');
+
+                $api->post('/agreement', 'Api\OrderManagementController@saveAgreement');
+                $api->post('/status', 'Api\OrderManagementController@setOrderStatus');
+
             });
 
             $api->group(['prefix' => 'products'], function ($api) {

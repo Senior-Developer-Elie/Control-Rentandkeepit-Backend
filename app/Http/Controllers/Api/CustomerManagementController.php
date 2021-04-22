@@ -64,16 +64,19 @@ class CustomerManagementController extends Controller
      */
     public function store(Request $request)
     {
-        /*$this->validate($request, [
-            'company_id' => 'required',
-            'name' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-        ]);*/
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'address' => 'required',
+            'state' => 'required',
+            'postcode' => 'required',
+            'city'    => 'required',
+        ]);
 
+        $request['country'] = 'AU';
         $customer = $this->model->create($request->all());
         
-        $result = $this->model->find($customer->id)->toArray();
+        $result = $this->model->where('customer_id', $customer->customer_id)->first()->toArray();
         return response($result); 
     }
 
@@ -95,6 +98,8 @@ class CustomerManagementController extends Controller
             'city'    => 'required',
         ]);
 
+        $request['country'] = 'AU';
+        
         $customer->update($request->all());        
         return response(['state' => 'success']);   
     }
@@ -115,41 +120,6 @@ class CustomerManagementController extends Controller
     }
 
 
-    public function saveAgreement(Request $request)
-    {
-        $this->validate($request, [
-            'customer_id' => 'required',
-            'order_id' => 'required',
-            'meta_key' => 'required',
-        ]);
-
-        $agreement = Agreement::where('customer_id', $request->customer_id)->
-                                where('order_id', $request->order_id)->get()->first();
-
-        if(!empty($agreement)) {
-            $agreement->update($request->all());
-        }
-        else 
-            Agreement::create($request->all());
-    }
-
-    public function downLoad()
-    {
-        $headers = array(
-
-            "Content-type"=>"text/html",
-            "Content-Disposition"=>"attachment;Filename=myGeneratefile.doc"    
-        );
-
-        $content = '<html>
-                        <head><meta charset="utf-8"></head>
-                        <body>
-                            <p>My Blog Laravel 7 generate word document from html Example - Nicesnippets.com</p>
-                            <ul><li>Php</li><li>Laravel</li><li>Html</li></ul>
-                        </body>
-                    </html>';
     
-        return \Response::make($content, 200, $headers);
-    }
 
 }

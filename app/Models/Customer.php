@@ -23,6 +23,8 @@ class Customer extends Model
         'data_last_active',
         'data_registered',
         'postcode',
+        'address',
+        'country',
         'city',
         'state',
     ];
