@@ -50,7 +50,11 @@ $api->version('v1', function($api){
 
                 $api->post('/agreement', 'Api\OrderManagementController@saveAgreement');
                 $api->post('/status', 'Api\OrderManagementController@setOrderStatus');
-
+                
+                $api->post('/metafirst', 'Api\OrderManagementController@updateMetaFirst');
+                $api->post('/metasecond', 'Api\OrderManagementController@updateMetaSecond');
+                $api->post('/metathird', 'Api\OrderManagementController@updateMetaThird');
+                $api->post('/metaforth', 'Api\OrderManagementController@updateMetaForth');
             });
 
             $api->group(['prefix' => 'products'], function ($api) {

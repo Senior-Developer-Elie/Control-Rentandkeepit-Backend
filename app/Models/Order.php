@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\OrderItem;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\PostMeta;
 
 class Order extends Model
 {
@@ -40,5 +41,10 @@ class Order extends Model
     public function order_items() 
     {
         return $this->hasMany(OrderItem::class,  'order_id', 'order_id')->with('order_item_product', 'order_item_metas');
+    }
+
+    public function post_meta()
+    {
+        return $this->hasMany(PostMeta::class, 'post_id', 'order_id');
     }
 }

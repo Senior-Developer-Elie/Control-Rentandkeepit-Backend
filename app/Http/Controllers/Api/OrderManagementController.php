@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+
 use App\Models\Order;
 use App\Models\Agreement;
-use Illuminate\Support\Facades\DB;
+use App\Models\PostMeta;
 
 class OrderManagementController extends Controller
 {
@@ -32,7 +34,7 @@ class OrderManagementController extends Controller
 
     public function index()
     {
-        $orders =  $this->model->with('customer', 'order_items')->get();
+        $orders =  $this->model->with('customer', 'order_items', 'post_meta')->get();
         return response($orders->toArray());
     }
 
@@ -134,5 +136,248 @@ class OrderManagementController extends Controller
                     ->update(['status' => $status]);
 
         return response(['status' => 'success']);
+    }
+
+    public function updateMetaFirst(Request $request) 
+    {
+        $this->validate($request, [
+            'order_id' => 'required',
+            '_billing_first_name' => 'required',
+            '_billing_last_name' => 'required',
+            '_billing_email' => 'required',
+            '_billing_address_1' => 'required',
+            '_billing_state' => 'required', 
+            '_billing_city' => 'required',
+            '_billing_postcode' => 'required',
+            '_billing_phone' => 'required',
+        ]);
+
+        $postMetas = PostMeta::where('post_id', $request->order_id)->get();
+
+
+        foreach($postMetas as $postMeta) {
+            $postMeta->timestamps = false;
+
+            switch($postMeta->meta_key) {
+                case '_billing_first_name':
+                    $postMeta->meta_value = $request->_billing_first_name;
+                    $postMeta->save();
+                break;
+
+                case '_billing_last_name':
+                    $postMeta->meta_value = $request->_billing_last_name;
+                    $postMeta->save();
+                break;
+                
+                case '_billing_email':
+                    $postMeta->meta_value = $request->_billing_email;
+                    $postMeta->save();
+                break;
+                
+                case '_billing_address_1':
+                    $postMeta->meta_value = $request->_billing_address_1;
+                    $postMeta->save();
+                break;
+                
+                case '_billing_state':
+                    $postMeta->meta_value = $request->_billing_state;
+                    $postMeta->save();
+                break;
+                
+                case '_billing_city':
+                    $postMeta->meta_value = $request->_billing_city;
+                    $postMeta->save();
+                break;
+                
+                case '_billing_postcode':
+                    $postMeta->meta_value = $request->_billing_postcode;
+                    $postMeta->save();
+                break;
+
+                case '_billing_phone':
+                    $postMeta->meta_value = $request->_billing_phone;
+                    $postMeta->save();
+                break;
+            }    
+        }
+    }
+
+    public function updateMetaSecond(Request $request) 
+    {
+        $this->validate($request, [
+            'order_id' => 'required',
+            'id_type' => 'required',
+            'id_number' => 'required',
+            'id_expiry_date' => 'required',
+            'id_date_of_birth' => 'required',
+            'id_existing_customer' => 'required',
+        ]);
+
+        $postMetas = PostMeta::where('post_id', $request->order_id)->get();
+
+        foreach($postMetas as $postMeta) {
+
+            $postMeta->timestamps = false;
+            switch($postMeta->meta_key) {
+                case 'id_type':
+                    $postMeta->meta_value = $request->id_type;
+                    $postMeta->save();
+                break;
+
+                case 'id_number':
+                    $postMeta->meta_value = $request->id_number;
+                    $postMeta->save();
+                break;
+                
+                case 'id_expiry_date':
+                    $postMeta->meta_value = $request->id_expiry_date;
+                    $postMeta->save();
+                break;
+                
+                case 'id_date_of_birth':
+                    $postMeta->meta_value = $request->id_date_of_birth;
+                    $postMeta->save();
+                break;
+                
+                case 'id_existing_customer':
+                    $postMeta->meta_value = $request->id_existing_customer;
+                    $postMeta->save();
+                break;
+            }    
+        }
+    }
+
+    public function updateMetaThird(Request $request) 
+    {
+        $this->validate($request, [
+            'order_id' => 'required',
+            'employment_status' => 'required',
+            'employer_name' => 'required',
+            'employer_phone' => 'required',
+            'employer_time' => 'required',
+            '_order_total' => 'required',
+        
+            'residential_status' => 'required',
+            'residential_time' => 'required',
+            'owner_mortgage' => 'required',
+
+            'debt_list' => 'required',
+            'debt_amount' => 'required',
+            'debt_repayments' => 'required',
+            'expenses_bills' => 'required',
+            'expenses_household' => 'required',
+        ]);
+
+        $postMetas = PostMeta::where('post_id', $request->order_id)->get();
+
+        foreach($postMetas as $postMeta) {
+            
+            $postMeta->timestamps = false;
+            switch($postMeta->meta_key) {
+                case 'employment_status':
+                    $postMeta->meta_value = $request->employment_status;
+                    $postMeta->save();
+                break;
+
+                case 'employer_name':
+                    $postMeta->meta_value = $request->employer_name;
+                    $postMeta->save();
+                break;
+                
+                case 'employer_phone':
+                    $postMeta->meta_value = $request->employer_phone;
+                    $postMeta->save();
+                break;
+
+                case 'employer_time':
+                    $postMeta->meta_value = $request->employer_time;
+                    $postMeta->save();
+                break;
+                
+                case '_order_total':
+                    $postMeta->meta_value = $request->_order_total;
+                    $postMeta->save();
+                break;
+                
+                case 'residential_status':
+                    $postMeta->meta_value = $request->residential_status;
+                    $postMeta->save();
+                break;
+
+                case 'residential_time':
+                    $postMeta->meta_value = $request->residential_time;
+                    $postMeta->save();
+                break;
+
+                case 'owner_mortgage':
+                    $postMeta->meta_value = $request->owner_mortgage;
+                    $postMeta->save();
+                break;
+                
+                case 'debt_list':
+                    $postMeta->meta_value = $request->debt_list;
+                    $postMeta->save();
+                break;
+                
+                case 'debt_amount':
+                    $postMeta->meta_value = $request->debt_amount;
+                    $postMeta->save();
+                break;
+                
+                case 'debt_repayments':
+                    $postMeta->meta_value = $request->debt_repayments;
+                    $postMeta->save();
+                break;
+
+                case 'expenses_bills':
+                    $postMeta->meta_value = $request->expenses_bills;
+                    $postMeta->save();
+                break;
+
+                case 'expenses_household':
+                    $postMeta->meta_value = $request->expenses_household;
+                    $postMeta->save();
+                break;
+            }    
+        }
+    }
+
+    public function updateMetaForth(Request $request) 
+    {
+        $this->validate($request, [
+            'order_id' => 'required',
+            'referee_name' => 'required',
+            'referee_address' => 'required',
+            'referee_phone' => 'required',
+            'referee_relationship' => 'required',
+        ]);
+
+        $postMetas = PostMeta::where('post_id', $request->order_id)->get();
+
+        foreach($postMetas as $postMeta) {
+
+            $postMeta->timestamps = false;
+            switch($postMeta->meta_key) {
+                case 'referee_name':
+                    $postMeta->meta_value = $request->referee_name;
+                    $postMeta->save();
+                break;
+                
+                case 'referee_address':
+                    $postMeta->meta_value = $request->referee_address;
+                    $postMeta->save();
+                break;
+                
+                case 'referee_phone':
+                    $postMeta->meta_value = $request->referee_phone;
+                    $postMeta->save();
+                break;
+                
+                case 'referee_relationship':
+                    $postMeta->meta_value = $request->referee_relationship;
+                    $postMeta->save();
+                break;
+            }    
+        }
     }
 }
