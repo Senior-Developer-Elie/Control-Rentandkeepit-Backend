@@ -129,6 +129,11 @@ class OrderManagementController extends Controller
             case 3:
                 $status = 'wc-finalised';
             break;
+
+            case 4:
+                $status = 'wc-processing_1';
+            break;
+
         }
 
         $order = DB::table('wp_wc_order_stats')
