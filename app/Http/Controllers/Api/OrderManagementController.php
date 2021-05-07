@@ -34,7 +34,7 @@ class OrderManagementController extends Controller
 
     public function index()
     {
-        $orders =  $this->model->with('customer', 'order_items', 'post_meta')->get();
+        $orders =  $this->model->with('customer', 'order_items', 'post_meta')->orderBy('order_id', 'DESC')->get();
         return response($orders->toArray());
     }
 
@@ -109,10 +109,57 @@ class OrderManagementController extends Controller
 
     public function saveProfitAndRevenue(Request $request)
     {
+        $this->validate($request, [
+            'customer_id' => 'required',
+            'order_id' => 'required',
+            'rental_amount_total' => 'required',
+            'profit_total' => 'required',
+            'profit_per_week' => 'required',
+            'profit_per_fortnight' => 'required',
+            'profit_per_month' => 'required',
+            'revenue_per_month' => 'required',
+        ]);
+        
+        $agreement = Agreement::where('customer_id', $request->customer_id)->
+                                where('order_id', $request->order_id)->get()->first();
+        $request['finalised'] = 1;
+        $agreement->update($request->all());
 
+        return response(['status' => 'success']);
     }
 
+    public function getYearsForReport()
+    {
+        $years =  DB::select("SELECT start_date_year AS `year` FROM agreements GROUP BY start_date_year");
+        return response($years);
+    }
 
+    public function getRevenueForReport()
+    {
+        $years =  DB::select("SELECT start_date_year AS `year` FROM agreements GROUP BY start_date_year");
+
+        $reports = DB::select("SELECT start_date_year AS `year`, start_date_month AS `month`, SUM(rental_amount_total) AS total_revenue, SUM(profit_total) AS total_profit FROM agreements
+                              GROUP BY start_date_year, start_date_month");
+        
+        $dataSets = array();
+        foreach ($years as $year) {
+            $dataSets['revenue'][strval($year->year)][0]['data'] = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            $dataSets['revenue'][$year->year][0]['lable'] = 'Revenue';
+            $dataSets['revenue'][$year->year][0]['fill'] = 'start';
+
+            $dataSets['profit'][strval($year->year)][0]['data'] = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            $dataSets['profit'][$year->year][0]['lable'] = 'Profit';
+            $dataSets['profit'][$year->year][0]['fill'] = 'start';
+            
+            foreach ($reports as $report) {
+                if($report->year === $year->year) {
+                    $dataSets['revenue'][$year->year][0]['data'][$report->month - 1] = $report->total_revenue / 500;
+                    $dataSets['profit'][$year->year][0]['data'][$report->month - 1] = $report->total_profit / 500;
+                }
+            }
+        }
+        return response($dataSets);
+    }
 
     public function setOrderStatus(Request $request)
     {

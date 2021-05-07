@@ -46,9 +46,16 @@ $api->version('v1', function($api){
 
             $api->group(['prefix' => 'orders'], function ($api) {
                 $api->get('/', 'Api\OrderManagementController@index');
+
+                $api->get('/report/years', 'Api\OrderManagementController@getYearsForReport');
+                $api->get('/report/revenue', 'Api\OrderManagementController@getRevenueForReport');
+                $api->get('/report/profit', 'Api\OrderManagementController@getProfitForReport');
+
                 $api->post('/', 'Api\OrderManagementController@store');
 
                 $api->post('/agreement', 'Api\OrderManagementController@saveAgreement');
+                $api->post('/agreement/profit', 'Api\OrderManagementController@saveProfitAndRevenue');
+
                 $api->post('/status', 'Api\OrderManagementController@setOrderStatus');
                 
                 $api->post('/metafirst', 'Api\OrderManagementController@updateMetaFirst');

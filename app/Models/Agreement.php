@@ -23,5 +23,7 @@ class Agreement extends Model
         'profit_per_week',
         'profit_per_fortnight',
         'profit_per_month',
+        'revenue_per_month',
+        'finalised',
     ];
 }
