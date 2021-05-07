@@ -84,6 +84,10 @@ class OrderManagementController extends Controller
             'customer_id' => 'required',
             'order_id' => 'required',
             'meta_key' => 'required',
+            'term_length' => 'required',
+            'start_date_day' => 'required',
+            'start_date_year' => 'required',
+            'start_date_month' => 'required',
         ]);
 
         $agreement = Agreement::where('customer_id', $request->customer_id)->
@@ -102,6 +106,12 @@ class OrderManagementController extends Controller
 
         return response(['status' => 'success']);
     }
+
+    public function saveProfitAndRevenue(Request $request)
+    {
+
+    }
+
 
 
     public function setOrderStatus(Request $request)
