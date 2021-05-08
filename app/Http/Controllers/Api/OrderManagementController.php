@@ -170,7 +170,13 @@ class OrderManagementController extends Controller
         $next30RevenueAndProfit = DB::select("SELECT SUM(rental_amount_total) as total_revenue, SUM(profit_total) as total_profit FROM agreements
                                               WHERE start_date BETWEEN '". $date . "' AND '" . $nextDate30 . "'
                                               GROUP BY start_date_year");  
-        $dataSets['next30'] = [$next30RevenueAndProfit[0]];
+        if(count($next30RevenueAndProfit))
+            $dataSets['next30'] = [$next30RevenueAndProfit[0]];
+        else
+            $dataSets['next30'][0] = [
+                'total_revenue' => 0,
+                'total_profit' => 0,
+            ];
         
         ////////
         $nextDate60_date = date_create($date);
@@ -180,8 +186,14 @@ class OrderManagementController extends Controller
         $next60RevenueAndProfit = DB::select("SELECT SUM(rental_amount_total) as total_revenue, SUM(profit_total) as total_profit FROM agreements
                                               WHERE start_date BETWEEN '". $date . "' AND '" . $nextDate60 . "'
                                               GROUP BY start_date_year");
-        $dataSets['next60'] = [$next60RevenueAndProfit[0]];
-
+        
+        if(count($next60RevenueAndProfit))
+            $dataSets['next60'] = [$next60RevenueAndProfit[0]];
+        else   
+            $dataSets['next60'][0] = [
+                'total_revenue' => 0,
+                'total_profit' => 0,
+            ];
 
         $nextDate90_date = date_create($date);
         date_add($nextDate90_date, date_interval_create_from_date_string("90 days"));
@@ -190,7 +202,13 @@ class OrderManagementController extends Controller
         $next90RevenueAndProfit = DB::select("SELECT SUM(rental_amount_total) as total_revenue, SUM(profit_total) as total_profit FROM agreements
                                               WHERE start_date BETWEEN '". $date . "' AND '" . $nextDate90 . "'
                                               GROUP BY start_date_year");
-        $dataSets['next90'] = [$next90RevenueAndProfit[0]];
+        if(count($next90RevenueAndProfit))
+            $dataSets['next90'] = [$next90RevenueAndProfit[0]];
+        else
+            $dataSets['next90'][0] = [
+                'total_revenue' => 0,
+                'total_profit' => 0,
+            ];
 
         return response($dataSets);
     }
