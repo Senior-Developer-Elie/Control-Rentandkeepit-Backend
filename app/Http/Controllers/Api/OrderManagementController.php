@@ -88,6 +88,7 @@ class OrderManagementController extends Controller
             'start_date_day' => 'required',
             'start_date_year' => 'required',
             'start_date_month' => 'required',
+            'start_date' => 'required',
         ]);
 
         $agreement = Agreement::where('customer_id', $request->customer_id)->
@@ -158,6 +159,39 @@ class OrderManagementController extends Controller
                 }
             }
         }
+        date_default_timezone_set('Australia/Melbourne');
+        $date = date('Y-m-d');
+        
+        ///////////
+        $nextDate30_date = date_create($date);
+        date_add($nextDate30_date, date_interval_create_from_date_string("30 days"));
+        $nextDate30 = $nextDate30_date->format('Y-m-d');
+
+        $next30RevenueAndProfit = DB::select("SELECT SUM(rental_amount_total) as total_revenue, SUM(profit_total) as total_profit FROM agreements
+                                              WHERE start_date BETWEEN '". $date . "' AND '" . $nextDate30 . "'
+                                              GROUP BY start_date_year");  
+        $dataSets['next30'] = [$next30RevenueAndProfit[0]];
+        
+        ////////
+        $nextDate60_date = date_create($date);
+        date_add($nextDate60_date, date_interval_create_from_date_string("60 days"));
+        $nextDate60 = $nextDate60_date->format('Y-m-d');
+
+        $next60RevenueAndProfit = DB::select("SELECT SUM(rental_amount_total) as total_revenue, SUM(profit_total) as total_profit FROM agreements
+                                              WHERE start_date BETWEEN '". $date . "' AND '" . $nextDate60 . "'
+                                              GROUP BY start_date_year");
+        $dataSets['next60'] = [$next60RevenueAndProfit[0]];
+
+
+        $nextDate90_date = date_create($date);
+        date_add($nextDate90_date, date_interval_create_from_date_string("90 days"));
+        $nextDate90 = $nextDate90_date->format('Y-m-d');
+
+        $next90RevenueAndProfit = DB::select("SELECT SUM(rental_amount_total) as total_revenue, SUM(profit_total) as total_profit FROM agreements
+                                              WHERE start_date BETWEEN '". $date . "' AND '" . $nextDate90 . "'
+                                              GROUP BY start_date_year");
+        $dataSets['next90'] = [$next90RevenueAndProfit[0]];
+
         return response($dataSets);
     }
 

@@ -17,6 +17,7 @@ class Agreement extends Model
         'start_date_day',
         'start_date_month',
         'start_date_year',
+        'start_date',
 
         'rental_amount_total',
         'profit_total',
