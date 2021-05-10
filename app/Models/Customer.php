@@ -28,12 +28,12 @@ class Customer extends Model
         'city',
         'state',
     ];
-
+    
     public $primaryKey  = 'customer_id';
     public $timestamps = false;
 
     public function orders()
     {
-        return $this->hasMany(Order::class, 'customer_id', 'customer_id');
+        return $this->hasMany(Order::class, 'customer_id', 'customer_id')->with('order_items');
     }
 }

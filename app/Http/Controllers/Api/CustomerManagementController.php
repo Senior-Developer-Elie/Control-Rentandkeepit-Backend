@@ -32,7 +32,7 @@ class CustomerManagementController extends Controller
 
     public function index()
     {
-        $customers =  $this->model->all();
+        $customers =  $this->model->with('orders')->get();
         return response($customers->toArray());
     }
 
