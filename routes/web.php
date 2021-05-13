@@ -1157,3 +1157,5 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                 return \Response::make($content, 200, $headers);
 
 });
+
+Route::get('/statement/{id}',  [\App\Http\Controllers\StatementManagementController::class, 'generatePDF']);
