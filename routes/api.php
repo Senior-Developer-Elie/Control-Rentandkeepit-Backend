@@ -55,7 +55,8 @@ $api->version('v1', function($api){
 
                 $api->post('/agreement', 'Api\OrderManagementController@saveAgreement');
                 $api->post('/agreement/profit', 'Api\OrderManagementController@saveProfitAndRevenue');
-
+                $api->post('/payment/manual', 'Api\OrderManagementController@savePaymentHistory');
+                
                 $api->post('/status', 'Api\OrderManagementController@setOrderStatus');
                 
                 $api->post('/metafirst', 'Api\OrderManagementController@updateMetaFirst');

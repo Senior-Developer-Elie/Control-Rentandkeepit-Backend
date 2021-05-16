@@ -30,7 +30,7 @@
 </style>
 <div class="statement">
     <div class="logo-image">
-        <img src="{{ public_path('statement.png') }}" width="680" height="150">
+        <img src="{{ public_path('heading.png') }}" width="720" height="130">
     </div>
     <div class="content">
         <div class='title'>
@@ -44,9 +44,9 @@
                 NSW 2452    
             </p>
             <p>
-                Customer account statement as of 28/12/2018<br>
-                Client Number: 18309<br>
-                For dates: 12/05/2018-28/12/2018
+                Customer account statement as of {{$today}}<br>
+                Client Number: {{$customerId}}<br>
+                For dates: 12/05/2018 - 28/12/2018
             </p><br>
 
             <span style="font-weight: bold;">Open Contract Summery<span>
@@ -63,71 +63,85 @@
                     <th>Total Outstanding</th>
                     <th>Status</th>
                 </tr>
-                @for($i = 0; $i < 4; $i++)
+                @php
+                    $totalRecived = 0;
+                    $totalOutstanding = 0;
+                @endphp
+                
+                @foreach($orderList as $order)
+
+                @php
+                    $totalRecived += $order['total_recived'];
+                    $totalOutstanding += $order['total_outstanding'];
+                @endphp
+
                 <tr style="font-weight: none;">
-                    <td>26994</td>
-                    <td>21/07/2018</td>
-                    <td>26/08/2020</td>
-                    <td>New Heller Sise By Side
-                        S/Steel Refrigerator with
-                        Water Dispenser -
-                        HSBS562W</td>
-                    <td>24 Months</td>
-                    <td>2</td>
+                    <td>{{ $order['id'] }}</td>
+                    <td>{{ $order['start_date'] }}</td>
+                    <td>{{ $order['expiry_date'] }}</td>
+                    <td>{{ $order['product_name'] }}</td>
+                    <td>{{ $order['term_length'] }}</td>
+                    <td>{{ $order['no_payment'] }}</td>
                     <td>$70.00</td>
-                    <td>$192.00</td>
-                    <td>$3,448.00</td>
-                    <td>Open</td>
+                    <td>${{ $order['total_recived'] }}</td>
+                    <td>${{ $order['total_outstanding'] }}</td>
+                    <td>{{ $order['status'] }}</td>
                 </tr>
-                @endfor
+                
+                @endforeach
 
                 <tr>
                     <td colspan="7">&nbsp;&nbsp;&nbsp;Total</td>
-                    <td>$750.00</td>
-                    <td>$7,414.00</td>
+                    <td>${{ $totalRecived }}</td>
+                    <td>${{ $totalOutstanding }}</td>
                     <td></td>
                 </tr>
             </table><br>
+
             <span style="font-weight: bold;">Payment History<span>
             <table width="100%">
                 <tr>
                     <th>Date</th>
                     <th>Description</th>
-                    <th>Paid to #24079</th>
-                    <th>Paid to #25557</th>
-                    <th>Paid to #26303</th>
-                    <th>Paid to #26994</th>
+                    @php
+                    $total_amount = array();
+                    @endphp
+                    @foreach($orderList as $order)
+                    @php
+                    $total_amount['paid_' . $order['id']] = 0;
+                    @endphp
+                    <th>Paid to #{{$order['id']}}</th>
+                    @endforeach
                 </tr>
-                <tr style="font-weight: none;">
-                    <td>16/05/2018</td>
-                    <td colspan="5" style="font-weight: bold;">Contract started: 'Bundle of 2 x New Samsung Galaxy Tab A 8.0 WiFi 16GB (BLACK) - SM-T380NZKAXSA'</td>
-                </tr>
-                <tr style="font-weight: none;">
-                    <td>16/05/2018</td>
-                    <td>Payment: $48.00</td>
-                    <td>$48.00</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr style="font-weight: none;">
-                    <td>16/05/2018</td>
-                    <td colspan="5" style="font-weight: bold;">Contract started: 'Bundle of 2 x New Samsung Galaxy Tab A 8.0 WiFi 16GB (BLACK) - SM-T380NZKAXSA'</td>
-                </tr>
-                <tr style="font-weight: none;">
-                    <td>16/05/2018</td>
-                    <td>Payment: $48.00</td>
-                    <td>$48.00</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+ 
+                @foreach($paymentList as $payment)
+                    
+                    @if($payment['is_contract'] == 1)
+                    <tr style="font-weight: none;">
+                        <td>{{ $payment['date'] }}</td>
+                        <td colspan="{{ $orderLength + 1 }}" style="font-weight: bold;">{{ $payment['description'] }}</td>
+                    </tr>
+                    @else
+                    <tr style="font-weight: none;">
+                        <td>{{ $payment['date'] }}</td>
+                        <td>{{ $payment['description'] }}</td>
+                        @foreach($orderList as $order)
+                        @php
+                            $total_amount['paid_' . $order['id']] += $payment['paid_' . $order['id']];
+                        @endphp
+                        <td>${{ $payment['paid_' . $order['id']] }}</td>
+                        
+                        @endforeach                    
+                    </tr>
+                    @endif
+
+                @endforeach
+
                 <tr>
                     <td colspan="2">&nbsp;&nbsp;&nbsp;Total</td>
-                    <td>$120.00</td>
-                    <td>$120.00</td>
-                    <td>$120.00</td>
-                    <td>$120.00</td>
+                    @foreach($orderList as $order)
+                    <td>${{ $total_amount['paid_' . $order['id']] }}</td>
+                    @endforeach   
                 </tr>
             </table>
             <p><span style="font-weight: bold;">How to Own The Goods<span></p>

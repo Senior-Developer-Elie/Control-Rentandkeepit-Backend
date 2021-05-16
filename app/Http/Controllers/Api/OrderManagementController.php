@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Agreement;
 use App\Models\PostMeta;
+use App\Models\PaymentHistory;
 
 class OrderManagementController extends Controller
 {
@@ -89,6 +90,7 @@ class OrderManagementController extends Controller
             'start_date_year' => 'required',
             'start_date_month' => 'required',
             'start_date' => 'required',
+            'rental_amount_total' => 'required',
         ]);
 
         $agreement = Agreement::where('customer_id', $request->customer_id)->
@@ -97,14 +99,49 @@ class OrderManagementController extends Controller
         if(!empty($agreement)) {
             $agreement->update($request->all());
         }
-        else 
+        else {
             Agreement::create($request->all());
+            
+            date_default_timezone_set('Australia/Melbourne');
+            $today = date('Y-m-d');
+
+            $paymentHistory = [
+                'date' => $today,
+                'customer_id' => $request->customer_id,
+                'order_id' => $request->order_id,
+                'is_contract' => 1,
+            ];
+
+            PaymentHistory::create($paymentHistory);
+        }   
+            
         
         //Order::where('order_id', $request->order_id)->update(array('status' => 'wc-approved'));
         $order = DB::table('wp_wc_order_stats')
                     ->where('order_id', $request->order_id)
                     ->update(['status' => 'wc-approved']);
 
+        return response(['status' => 'success']);
+    }
+
+    public function savePaymentHistory(Request $request) 
+    {
+        $this->validate($request, [
+            'customer_id' => 'required',
+            'order_id' => 'required',
+            'paid_amount' => 'required',         
+            'refund' => 'required',
+            'date' => 'required',              
+            'payment_method' => 'required',      
+        ]);
+
+        //date_default_timezone_set('Australia/Melbourne');
+        //$today = date('Y-m-d');
+        //$request['date'] = $today;
+        
+        $request['is_contract'] = 0;
+        PaymentHistory::create($request->all());
+        
         return response(['status' => 'success']);
     }
 

@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\PostMeta;
+use App\Models\Agreement;
 
 class Order extends Model
 {
@@ -38,9 +39,15 @@ class Order extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
     }
+    
     public function order_items() 
     {
         return $this->hasMany(OrderItem::class,  'order_id', 'order_id')->with('order_item_product', 'order_item_metas');
+    }
+
+    public function agreement()
+    {
+        return $this->hasOne(Agreement::class, 'order_id', 'order_id');
     }
 
     public function post_meta()
