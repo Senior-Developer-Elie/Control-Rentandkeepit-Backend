@@ -90,6 +90,7 @@ class OrderManagementController extends Controller
             'start_date_year' => 'required',
             'start_date_month' => 'required',
             'start_date' => 'required',
+            'instalment_amount' => 'required',
             'rental_amount_total' => 'required',
         ]);
 

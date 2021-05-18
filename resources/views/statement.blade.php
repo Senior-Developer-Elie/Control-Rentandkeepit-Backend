@@ -38,15 +38,15 @@
         </div>
         <div class="body-content">
             <p>
-                Sherrie Lynwood<br>
-                3/20 Graff Ave<br>
-                Toormina<br>
-                NSW 2452    
+                {{$customer_name}}<br>
+                {{$customer_address}}<br>
+                {{$customer_city}}<br>
+                {{$customer_state}}   
             </p>
             <p>
                 Customer account statement as of {{$today}}<br>
                 Client Number: {{$customerId}}<br>
-                For dates: 12/05/2018 - 28/12/2018
+                For dates: {{$start_date_min}} - {{$expriy_date_max}}
             </p><br>
 
             <span style="font-weight: bold;">Open Contract Summery<span>
@@ -82,7 +82,7 @@
                     <td>{{ $order['product_name'] }}</td>
                     <td>{{ $order['term_length'] }}</td>
                     <td>{{ $order['no_payment'] }}</td>
-                    <td>$70.00</td>
+                    <td>${{ $order['instalment'] }}</td>
                     <td>${{ $order['total_recived'] }}</td>
                     <td>${{ $order['total_outstanding'] }}</td>
                     <td>{{ $order['status'] }}</td>
@@ -164,7 +164,7 @@
             </p>
 
             <p>
-                <span style="font-weight: none;">Website:  <a href="#">www.directappliancerentals.com.au</a></span><br>
+                <span style="font-weight: none;">Website:  <a href="#">www.rentandkeepit.com.au</a></span><br>
                 <span style="font-weight: none;">Facebook:  <a href="#">www.facebook.com/directappliancerentals</a></span>
             </p>
             
