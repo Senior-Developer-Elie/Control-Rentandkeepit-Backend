@@ -160,12 +160,12 @@
             <br>
             <p>
                 <span style="font-weight: none;">Warmest Regards,</span><br>
-                <span style="font-weight: none;">the Direct Appliance Rentals Team</span>
+                <span style="font-weight: none;">the RentandKeepIt Team</span>
             </p>
 
             <p>
                 <span style="font-weight: none;">Website:  <a href="#">www.rentandkeepit.com.au</a></span><br>
-                <span style="font-weight: none;">Facebook:  <a href="#">www.facebook.com/directappliancerentals</a></span>
+                <span style="font-weight: none;">Facebook:  <a href="#">www.facebook.com/rentandkeepit</a></span>
             </p>
             
         <div>
