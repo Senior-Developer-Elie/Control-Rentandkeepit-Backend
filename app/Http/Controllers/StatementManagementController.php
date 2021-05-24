@@ -37,7 +37,7 @@ class StatementManagementController extends Controller
                 
                 $temp['start_date'] =  date("d/m/Y", strtotime($order->agreement->start_date));
 
-                if($startDateMin < $temp['start_date'])
+                if($startDateMin > $temp['start_date'])
                     $startDateMin = $temp['start_date'];
 
                 $temp['term_length'] = $order->agreement->term_length == 1 ? '12 months' : '24 months';
@@ -51,8 +51,8 @@ class StatementManagementController extends Controller
                     }
                 }
 
-                if($expriyDateMax > $temp['expiry_date'])
-                    $expriyDateMax = $temp['expiry_date'];
+                //if($expriyDateMax > $temp['expiry_date'])
+                //    $expriyDateMax = $temp['expiry_date'];
 
                 $payments = PaymentHistory::where('order_id', $order->order_id)->where('is_contract', 0)->get();
                 

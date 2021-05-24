@@ -94,7 +94,7 @@ class UploadFileController extends Controller
                     PaymentHistory::create($data);
                 }
             }
-            //return response($customerArr);
+            //return response($centrepayBulkArr);
         }
         else if($request->category == 'payment-2') {
             $request->file->move(public_path('uploads/ezi-debit'), $fileName);
