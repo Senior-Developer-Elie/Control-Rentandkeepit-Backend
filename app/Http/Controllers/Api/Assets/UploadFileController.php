@@ -76,9 +76,9 @@ class UploadFileController extends Controller
             $request->file->move(public_path('uploads/centrepay'), $fileName);
             
             $file = public_path('uploads/centrepay/' . $fileName);
-            $paymentBulkArr = $this->csvToArray($file);
+            $centrepayBulkArr = $this->csvToArray($file);
             
-            foreach ($paymentBulkArr as $paymentBulk) {
+            foreach ($centrepayBulkArr as $paymentBulk) {
                 $agreement = Agreement::where('meta_key', $paymentBulk[2])->first();
                 if($agreement != null) {
                     //return response(["test" => (float)substr($paymentBulk[3], 1)]);
@@ -96,8 +96,31 @@ class UploadFileController extends Controller
             }
             //return response($customerArr);
         }
-        else if($request->category == 'payment-2')
+        else if($request->category == 'payment-2') {
             $request->file->move(public_path('uploads/ezi-debit'), $fileName);
+            $file = public_path('uploads/ezi-debit/' . $fileName);
+            $eziDebitBulkArr = $this->csvToArray($file);
+
+            foreach ($eziDebitBulkArr as $paymentBulk) {
+                $agreement = Agreement::where('meta_key', $paymentBulk[2])->first();
+                if($agreement != null) {
+                    //return response(["test" => (float)substr($paymentBulk[3], 1)]);
+                    $data = [
+                        'date' => date('Y-m-d', strtotime($paymentBulk[0])),
+                        'customer_id' => $agreement->customer_id,
+                        'order_id' => $agreement->order_id,
+                        'paid_amount' => (float)$paymentBulk[4],
+                        'payment_method' => 2,
+                        'is_contract' => 0,
+                    ];
+
+                    PaymentHistory::create($data);
+                }
+            }
+
+           // return response($eziDebitBulkArr);
+        }
+            
         else
             $request->file->move(public_path('uploads/customers'), $fileName);
 

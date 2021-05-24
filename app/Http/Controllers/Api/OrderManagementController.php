@@ -111,6 +111,7 @@ class OrderManagementController extends Controller
                 'customer_id' => $request->customer_id,
                 'order_id' => $request->order_id,
                 'is_contract' => 1,
+                
             ];
 
             PaymentHistory::create($paymentHistory);
