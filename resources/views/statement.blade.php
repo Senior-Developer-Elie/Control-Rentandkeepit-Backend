@@ -148,7 +148,7 @@
             <p>
                 <span style="font-weight: bold;">During the Lease<span><br>
                 <span style="font-weight: none;">You can make an offer to acquire the goods at any time.</span><br>
-                <span style="font-weight: none;">Just call Direct Appliance Rentals and we will let you know the nominal value of the goods at that point in time.</span>
+                <span style="font-weight: none;">Just call Rent & Keep It and we will let you know the nominal value of the goods at that point in time.</span>
             </p>
 
             <p>
@@ -160,7 +160,7 @@
             <br>
             <p>
                 <span style="font-weight: none;">Warmest Regards,</span><br>
-                <span style="font-weight: none;">the RentandKeepIt Team</span>
+                <span style="font-weight: none;">the Rent & Keep It Team</span>
             </p>
 
             <p>

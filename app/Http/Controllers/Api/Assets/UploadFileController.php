@@ -13,6 +13,8 @@ use GuzzleHttp\Exception\TransferException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Models\PaymentHistory;
+use App\Models\Agreement;
 
 /**
  * Class UploadFileController.
@@ -65,12 +67,40 @@ class UploadFileController extends Controller
     {
         $request->validate([
             'file' => 'required|max:100000',
+            'category' => 'required'
         ]);
         //return response($request->all());  
         $fileName = time().'.'.$request->file->extension();  
-   
-        $request->file->move(public_path('uploads'), $fileName);
         
+        if($request->category == 'payment-1') {
+            $request->file->move(public_path('uploads/centrepay'), $fileName);
+            
+            $file = public_path('uploads/centrepay/' . $fileName);
+            $paymentBulkArr = $this->csvToArray($file);
+            
+            foreach ($paymentBulkArr as $paymentBulk) {
+                $agreement = Agreement::where('meta_key', $paymentBulk[2])->first();
+                if($agreement != null) {
+                    //return response(["test" => (float)substr($paymentBulk[3], 1)]);
+                    $data = [
+                        'date' => date('Y-m-d', strtotime($paymentBulk[5])),
+                        'customer_id' => $agreement->customer_id,
+                        'order_id' => $agreement->order_id,
+                        'paid_amount' => (float)substr($paymentBulk[3], 1),
+                        'payment_method' => 1,
+                        'is_contract' => 0,
+                    ];
+
+                    PaymentHistory::create($data);
+                }
+            }
+            //return response($customerArr);
+        }
+        else if($request->category == 'payment-2')
+            $request->file->move(public_path('uploads/ezi-debit'), $fileName);
+        else
+            $request->file->move(public_path('uploads/customers'), $fileName);
+
         return response(['filename' => $fileName]);
     }
 
@@ -203,5 +233,27 @@ class UploadFileController extends Controller
         if ($contentLength > config('files.maxsize', 1000000) || mb_strlen($content) > config('files.maxsize', 1000000)) {
             throw new BodyTooLargeException();
         }
+    }
+
+    function csvToArray($filename = '', $delimiter = ',')
+    {
+        if (!file_exists($filename) || !is_readable($filename))
+            return false;
+
+        $header = null;
+        $data = array();
+        if (($handle = fopen($filename, 'r')) !== false)
+        {
+            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
+            {
+                //if (!$header)
+                //    $header = $row;
+                //else
+                        $data[] = $row;
+            }
+            fclose($handle);
+        }
+
+        return $data;
     }
 }
