@@ -94,6 +94,7 @@ class CustomerManagementController extends Controller
             'last_name' => 'required',
             'email' => 'required',
             'state' => 'required',
+            'address' => 'required',
             'postcode' => 'required',
             'city'    => 'required',
         ]);
