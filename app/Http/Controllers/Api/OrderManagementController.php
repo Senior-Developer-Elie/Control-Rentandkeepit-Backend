@@ -121,7 +121,7 @@ class OrderManagementController extends Controller
         //Order::where('order_id', $request->order_id)->update(array('status' => 'wc-approved'));
         $order = DB::table('wp_wc_order_stats')
                     ->where('order_id', $request->order_id)
-                    ->update(['status' => 'wc-approved']);
+                    ->update(['status' => 'wc-processing_1']);
 
         return response(['status' => 'success']);
     }
@@ -267,7 +267,7 @@ class OrderManagementController extends Controller
             break;
             
             case 1:
-                $status = 'wc-approved';
+                $status = 'wc-processing_1';
             break;
             
             case 2:
@@ -275,12 +275,12 @@ class OrderManagementController extends Controller
             break;
             
             case 3:
-                $status = 'wc-finalised';
+                $status = 'wc-active';
             break;
 
-            case 4:
+            /*case 4:
                 $status = 'wc-processing_1';
-            break;
+            break;*/
 
         }
 
