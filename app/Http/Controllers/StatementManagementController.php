@@ -32,7 +32,7 @@ class StatementManagementController extends Controller
         $expriyDateMax = $today;
         
         foreach ($customer->orders as $order) {
-            if($order->status == 'wc-approved' || $order->status == 'wc-finalised') {
+            if($order->status == 'wc-active' || $order->status == 'wc-finished') {
                 $temp['id'] = $order->agreement->meta_key;
                 
                 $temp['start_date'] =  date("d/m/Y", strtotime($order->agreement->start_date));

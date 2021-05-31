@@ -278,9 +278,9 @@ class OrderManagementController extends Controller
                 $status = 'wc-active';
             break;
 
-            /*case 4:
-                $status = 'wc-processing_1';
-            break;*/
+            case 4:
+                $status = 'wc-finished';
+            break;
 
         }
 
