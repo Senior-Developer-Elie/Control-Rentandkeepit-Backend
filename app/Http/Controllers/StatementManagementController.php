@@ -41,7 +41,7 @@ class StatementManagementController extends Controller
                     $startDateMin = $temp['start_date'];
 
                 $temp['term_length'] = $order->agreement->term_length == 1 ? '12 months' : '24 months';
-                $temp['status'] = $order->status == 'wc-approved' ? 'open' : 'finished';
+                $temp['status'] = $order->status == 'wc-active' ? 'open' : 'finished';
                 $temp['instalment'] = $order->agreement->instalment_amount;
 
                 foreach ($order->post_meta as $post_meta) {
@@ -79,7 +79,6 @@ class StatementManagementController extends Controller
         
         foreach ($datesDividedHistory as $dateHistory) {
             $total = 0;
-            $temp['date'] = date("d/m/Y", strtotime($dateHistory->date));
             $temp['is_contract'] = $dateHistory->is_contract;
             foreach ($paymentHistories as $paymentHistory) {
                 
@@ -89,10 +88,13 @@ class StatementManagementController extends Controller
                     $total += $paymentHistory->paid_amount;
                 }
             }
-            if($dateHistory->is_contract == 0)
+            if($dateHistory->is_contract == 0) {
                 $temp['description'] = 'payment : $' . $total;
+                $temp['date'] = date("d/m/Y", strtotime($dateHistory->date));
+            }
             else {
                 $temp['description'] = 'contract started : ';
+                $temp['date'] = date("d/m/Y", strtotime($dateHistory->order->agreement->start_date));
                 foreach ($dateHistory->order->order_items as $order_item) {
                     $temp['description'] .= ($order_item->order_item_name . ', ');
                 }
