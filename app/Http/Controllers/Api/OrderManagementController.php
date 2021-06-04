@@ -249,9 +249,9 @@ class OrderManagementController extends Controller
                 'total_profit' => 0,
             ];
         
-        $totalOutStanding = DB::select("SELECT SUM(paid_amount) AS total_amount FROM payment_histories 
-                                        LEFT JOIN wp_wc_order_stats ON payment_histories.order_id = wp_wc_order_stats.order_id
-                                        WHERE payment_histories.is_contract = '0' AND wp_wc_order_stats.status = 'wc-active' ");
+        $totalOutStanding = DB::select("SELECT SUM(rental_amount_total) AS total_amount, SUM(profit_total) AS total_profit FROM agreements
+                                        WHERE finalised = '1'
+                                        GROUP BY finalised ");
         
         $dataSets['total_outstanding'] = [$totalOutStanding[0]];
 
