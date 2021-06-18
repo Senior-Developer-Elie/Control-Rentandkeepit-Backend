@@ -13,7 +13,7 @@ class AddAddressToCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::table('wp_wc_customer_lookup', function (Blueprint $table) {
+        Schema::table('8sfz_wp_wc_customer_lookup', function (Blueprint $table) {
             $table->string('address')->after('postcode')->nullable();
         });
     }
