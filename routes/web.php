@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\URL;
 
 Route::get('/', [\App\Http\Controllers\ApiDocsController::class, 'index']);
 
+Route::get('/statement/{id}',  [\App\Http\Controllers\StatementManagementController::class, 'generatePDF']);
+
 Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}/{products}/{term}/{startDate_day}/{startDate_month}/{startDate_year}/{eachRepayment}/{firstPaymentDate}/{frequency}/{leaseNumber}/{totalAmount}
 ', 
             
@@ -18,7 +20,7 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                     "Content-Disposition"=>"attachment;Filename=Rent & Keep It Lease Schedule(" . $customerName . ").doc"
                 );
                 
-                $image = URL::to('heading.png'); //"http://localhost:8000/heading.png";
+                $image = URL::to('heading.png'); //"http://92.119.159.137/heading.png";
                 
                 $firstPaymentDate_format = $firstPaymentDate;
                 $firstPaymentDate_format = str_replace('-', '/',  $firstPaymentDate_format);
@@ -75,7 +77,7 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                             </head>
                                 <body>
                                     <div class="Section1" style="font-size: 13px; margin: 5px;">
-                                        <img src="http://localhost:8000/heading.png" width="720" height="130" style="margin-top: -50px;">
+                                        <img src="http://control.rentandkeepit.com.au/heading.png" width="720" height="130" style="margin-top: -50px;">
                                         <div style="border-color: black; border-style: solid; padding: 10px; border-width: 2px;" width="600">
                                             <p style="text-align: center;">
                                                 <span style="font-size: 20px; font-weight: bold; color: blue;">SCHEDULE <br>LEASE AGREEMENT</span><br>
@@ -262,7 +264,7 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                                         </div>
 
                                         <br clear="all" style="page-break-before:always" />
-                                        <img src="http://localhost:8000/heading.png" width="720" height="130" style="margin-top: -50px;">
+                                        <img src="http://92.119.159.137/heading.png" width="720" height="130" style="margin-top: -50px;">
 
                                         <div width="600" style="margin-top:50px;">
                                             <p style="text-align: center; margin-bottom: 70px;">
@@ -655,7 +657,7 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                                         </div>
                                         
                                         <br clear="all" style="page-break-before:always" />
-                                        <img src="http://localhost:8000/heading.png" width="720" height="130" style="margin-top: -50px;">
+                                        <img src="http://92.119.159.137/heading.png" width="720" height="130" style="margin-top: -50px;">
 
                                         <div width="600" style="margin-top:50px;">
                                             <p style="text-align: center; margin-bottom: 70px;">
@@ -804,7 +806,7 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                                         </div>
 
                                         <br clear="all" style="page-break-before:always" />
-                                        <img src="http://localhost:8000/heading.png" width="720" height="130" style="margin-top: -50px;">
+                                        <img src="http://92.119.159.137/heading.png" width="720" height="130" style="margin-top: -50px;">
 
                                         <div width="600" style="margin-top:50px;">
                                             <p style="text-align: center; margin-bottom: 70px;">
@@ -1048,7 +1050,7 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                                         </div>
                                         
                                         <br clear="all" style="page-break-before:always" />
-                                        <img src="http://localhost:8000/heading.png" width="720" height="130" style="margin-top: -50px;">
+                                        <img src="http://92.119.159.137/heading.png" width="720" height="130" style="margin-top: -50px;">
                         
                                         <div width="600" style="margin-top:50px;">
                                             <p style="text-align: center; margin-bottom: 70px;">
@@ -1157,5 +1159,3 @@ Route::get('/download/{refKey}/{customerName}/{address}/{phoneNumber}/{postCode}
                 return \Response::make($content, 200, $headers);
 
 });
-
-Route::get('/statement/{id}',  [\App\Http\Controllers\StatementManagementController::class, 'generatePDF']);
