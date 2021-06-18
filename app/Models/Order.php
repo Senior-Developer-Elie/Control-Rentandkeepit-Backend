@@ -13,7 +13,7 @@ use App\Models\Agreement;
 class Order extends Model
 {
     use HasFactory;
-    protected $table = 'wp_wc_order_stats';
+    protected $table = '8sfz_wc_order_stats';
 
     /**
      * The attributes that are mass assignable.

@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'wp_posts';
+    protected $table = '8sfz_posts';
     
     public function product_meta()
     {

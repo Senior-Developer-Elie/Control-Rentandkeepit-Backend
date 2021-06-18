@@ -10,7 +10,7 @@ use App\Models\Customer;
 class OrderItemMeta extends Model
 {
     use HasFactory;
-    protected $table = 'wp_woocommerce_order_itemmeta';
+    protected $table = '8sfz_woocommerce_order_itemmeta';
 
     public function order_item_metas()
     {

@@ -9,7 +9,7 @@ use App\Models\Product;
 class ProductMeta extends Model
 {
     use HasFactory;
-    protected $table = 'wp_wc_product_meta_lookup';
+    protected $table = '8sfz_wc_product_meta_lookup';
 
     public function product()
     {

@@ -10,7 +10,7 @@ use App\Models\Product;
 class OrderProduct extends Model
 {
     use HasFactory;
-    protected $table = 'wp_wc_order_product_lookup';
+    protected $table = '8sfz_wc_order_product_lookup';
     
     public function product() 
     {

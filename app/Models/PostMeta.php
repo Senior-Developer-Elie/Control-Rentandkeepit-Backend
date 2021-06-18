@@ -10,7 +10,7 @@ class PostMeta extends Model
 {
     use HasFactory;
 
-    protected $table = 'wp_postmeta';
+    protected $table = '8sfz_postmeta';
     public $primaryKey  = 'meta_id';
 
     public function order()

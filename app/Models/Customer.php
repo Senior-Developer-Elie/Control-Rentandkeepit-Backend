@@ -9,7 +9,7 @@ use App\Models\Order;
 class Customer extends Model
 {
     use HasFactory;
-    protected $table = 'wp_wc_customer_lookup';
+    protected $table = '8sfz_wc_customer_lookup';
     
     /**
      * The attributes that are mass assignable.
