@@ -13,8 +13,12 @@ use GuzzleHttp\Exception\TransferException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File; 
 use App\Models\PaymentHistory;
 use App\Models\Agreement;
+use Auth;
+use Illuminate\Support\Facades\URL;
+
 
 /**
  * Class UploadFileController.
@@ -104,7 +108,6 @@ class UploadFileController extends Controller
             foreach ($eziDebitBulkArr as $paymentBulk) {
                 $agreement = Agreement::where('meta_key', $paymentBulk[2])->first();
                 if($agreement != null) {
-                    //return response(["test" => (float)substr($paymentBulk[3], 1)]);
                     $data = [
                         'date' => date('Y-m-d', strtotime($paymentBulk[0])),
                         'customer_id' => $agreement->customer_id,
@@ -120,7 +123,15 @@ class UploadFileController extends Controller
 
            // return response($eziDebitBulkArr);
         }
-            
+        elseif ($request->category == "me") {
+            $request->file->move(public_path('uploads/pictures'), $fileName);
+            $file = public_path('uploads/ezi-debit/' . $fileName);
+            $user = Auth::user();
+
+            File::delete(public_path('uploads/pictures/' . $user->image_path));
+            $user->image_path = $fileName;
+            $user->save();
+        }
         else
             $request->file->move(public_path('uploads/customers'), $fileName);
 

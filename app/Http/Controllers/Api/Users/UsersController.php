@@ -45,6 +45,7 @@ class UsersController extends Controller
      */
     public function index()
     {
+        //return response(["tes" => "ddd"]);
         $users =  $this->model->all();
         return response($users->toArray());
     }
@@ -81,9 +82,20 @@ class UsersController extends Controller
             $user->syncRoles($role->uuid);
         }
 
-        return $this->response->noContent();
+        return response(['msg' => 'success']);
     }
 
+    public function user_update(Request $request, $id) 
+    {
+        $user = User::find($id);
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required',
+        ]);
+
+        $user->update($request->all());
+        return response(['msg' => 'success']);
+    }
     /**
      * @param Request $request
      * @param $uuid
@@ -94,7 +106,7 @@ class UsersController extends Controller
         $user = $this->model->find($id);
         $rules = [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'email' => 'required',
         ];
         if ($request->method() == 'PATCH') {
             $rules = [

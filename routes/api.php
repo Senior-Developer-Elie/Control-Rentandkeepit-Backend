@@ -19,6 +19,7 @@ $api->version('v1', function($api){
 
         $api->group(['middleware' => ['auth:api'], ], function ($api) {
             $api->group(['prefix' => 'auth'], function ($api) {
+                $api->get('/me', 'Api\Auth\ApiAuthController@getCurrentUserInfo');                       
                 $api->post('/logout', 'Api\Auth\ApiAuthController@logout');                       
             });
         });
@@ -28,15 +29,18 @@ $api->version('v1', function($api){
             $api->group(['prefix' => 'users'], function ($api) {
                 $api->get('/', 'Api\Users\UsersController@index');
                 $api->get('/{id}', 'Api\Users\UsersController@show');
-                $api->put('/{id}', 'Api\Users\UsersController@update');
-                $api->patch('/{id}', 'Api\Users\UsersController@update');
+                $api->post('/', 'Api\Users\UsersController@store');
+                
+                $api->put('/{id}', 'Api\Users\UsersController@user_update');
+                
+                //$api->put('/{id}', 'Api\Users\UsersController@update');
+                //$api->patch('/{id}', 'Api\Users\UsersController@update');
                 $api->delete('/{id}', 'Api\Users\UsersController@destroy');
             });
 
             $api->group(['prefix' => 'customers'], function ($api) {
                 $api->get('/', 'Api\CustomerManagementController@index');
                 $api->get('/orders/{id}', 'Api\CustomerManagementController@getOrders');
-                $api->get('/download', 'Api\CustomerManagementController@downLoad');
 
                 $api->post('/', 'Api\CustomerManagementController@store');
 

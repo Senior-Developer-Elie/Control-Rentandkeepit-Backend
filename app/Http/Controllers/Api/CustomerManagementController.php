@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Agreement;
+use App\Models\User;
 
 class CustomerManagementController extends Controller
 {
@@ -119,8 +120,5 @@ class CustomerManagementController extends Controller
             'message' => 'success',
         ]);
     }
-
-
-    
 
 }
