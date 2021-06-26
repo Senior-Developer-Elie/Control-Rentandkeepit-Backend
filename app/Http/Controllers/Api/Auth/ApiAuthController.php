@@ -23,7 +23,7 @@ class ApiAuthController extends Controller
             'name' => $user->name,
             'email' => $user->email,
             'role' => $user->getRoleNames()[0],
-            'avatar' => $user->image_path ?  $user->image_path : '',  
+            'image_path' => $user->image_path ?  $user->image_path : '',  
         ];
 
         return response($response);
@@ -54,7 +54,7 @@ class ApiAuthController extends Controller
                                 'uuid' => $user->uuid,
                                 'access_token' => $token,
                                 'role' => 'Owner',
-                                'avatar' => $user->image_path ?  $user->image_path : '',
+                                'image_path' => $user->image_path ?  $user->image_path : '',
                             ];
                 //return response($response);
                 return response($response, 200);
