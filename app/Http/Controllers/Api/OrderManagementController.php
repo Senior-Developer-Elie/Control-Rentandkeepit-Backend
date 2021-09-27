@@ -119,7 +119,7 @@ class OrderManagementController extends Controller
             
         
         //Order::where('order_id', $request->order_id)->update(array('status' => 'wc-approved'));
-        $order = DB::table('wp_wc_order_stats')
+        $order = DB::table('8sfz_wc_order_stats')
                     ->where('order_id', $request->order_id)
                     ->update(['status' => 'wc-processing_1']);
 
@@ -290,7 +290,7 @@ class OrderManagementController extends Controller
 
         }
 
-        $order = DB::table('wp_wc_order_stats')
+        $order = DB::table('8sfz_wc_order_stats')
                     ->where('order_id', $request->order_id)
                     ->update(['status' => $status]);
 
