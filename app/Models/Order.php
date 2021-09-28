@@ -9,11 +9,13 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\PostMeta;
 use App\Models\Agreement;
+use App\Models\Post;
 
 class Order extends Model
 {
     use HasFactory;
     protected $table = '8sfz_wc_order_stats';
+    public $primaryKey  = 'order_id';
 
     /**
      * The attributes that are mass assignable.
@@ -50,8 +52,33 @@ class Order extends Model
         return $this->hasOne(Agreement::class, 'order_id', 'order_id');
     }
 
+    public function post() 
+    {
+        return $this->belongsTo(Post::class, 'order_id', 'ID');
+    }
+
     public function post_meta()
     {
         return $this->hasMany(PostMeta::class, 'post_id', 'order_id');
+    }
+
+    public function delete()
+    {
+        if($this->order_items != null)
+            foreach ($this->order_items as $order_item) {
+                if($order_item != null)
+                $order_item->delete();
+            }
+            
+        if($this->post != null)
+            $this->post->delete();
+        
+        if($this->agreement != null)
+            $this->agreement->delete();
+        
+        foreach ($this->post_meta as $meta)
+            $meta->delete();
+        
+        return parent::delete();
     }
 }

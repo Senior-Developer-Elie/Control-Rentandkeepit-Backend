@@ -539,4 +539,17 @@ class OrderManagementController extends Controller
             }    
         }
     }
+
+    public function deleteOrder($id)
+    {
+        $order = DB::transaction(function () use ($id) {
+            $order = Order::where('order_id', $id)->first()->delete();
+            return $order;
+        });
+
+        if($order)
+            return response(['status' => 'success']);
+        return response(['status' => 'failed']);
+        
+    }
 }

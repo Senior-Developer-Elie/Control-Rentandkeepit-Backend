@@ -67,6 +67,8 @@ $api->version('v1', function($api){
                 $api->post('/metasecond', 'Api\OrderManagementController@updateMetaSecond');
                 $api->post('/metathird', 'Api\OrderManagementController@updateMetaThird');
                 $api->post('/metaforth', 'Api\OrderManagementController@updateMetaForth');
+
+                $api->delete('/delete/{id}', 'Api\OrderManagementController@deleteOrder');
             });
 
             $api->group(['prefix' => 'products'], function ($api) {

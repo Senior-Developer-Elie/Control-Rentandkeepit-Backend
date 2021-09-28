@@ -11,6 +11,7 @@ class OrderItemMeta extends Model
 {
     use HasFactory;
     protected $table = '8sfz_woocommerce_order_itemmeta';
+    public $primaryKey  = 'meta_id';
 
     public function order_item_metas()
     {
